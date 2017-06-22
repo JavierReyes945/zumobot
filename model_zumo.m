@@ -3,20 +3,49 @@
 
 clear all, clc, close all
 
+%  Physical parameters of the system //TODO: Re-define values
+g = 9.8;            % Gravity constant [ m/s^2 ]
+M = 1;              % Mass of cart [ kg ]
+m = 0.2;            % Mass of pendulum [ kg ]
+b = 0;              % Friction constant [ N/m/s ]
+L = 12.5e-2;        % Lenght of pendulum to center of gravity [ m ]
+I = m*(L^2);        % Moment of intertia (pendulum) [ kg.m^2 ]
+R = 2.3e-2;         % Radius of pulley [ m ]
+tcm = 0.5;          % Time constant of the motor [ s ]
+Km = 17;            % Gain motor [ rad/s/V ]
+Kf = 9/pi;          % Gain of feedback [ V/rad/s ]
+
+%  Linearized approximation transfer function IP
+Kp = 1/((M+m)*g);
+Ap = 1/((m*g*L*(M+m))/((M+m)*(L+m*(L^2))-(m*L)^2));
+numZumo = [Kp];
+denZumo = [Ap -1];
+iptf = tf(numZumo, denZumo, 'InputName', 'Force', ...
+                            'OutputName', 'angular position');
+
+%  Overall transfer function of actiation mechanism
+numMotor = [Km*(M+m)*R 0];
+denMotor = [tcm 1];
+mtf = tf(numMotor, denMotor, 'InputName', 'Error voltage', ...
+                            'OutputName', 'angular position');
+
+%  Transfer function of the whole system
+numSys = [Kf*Kp*Km*R*(M+m) 0];
+denSys = [Ap*tcm Ap -tcm -1];
+zmtf = tf(numSys, denSys, 'InputName', 'Error voltage', ...
+                          'OutputName', 'angular position');
+
+%  Zero-pole map of the open loop system
+h1 = rlocusplot(zmtf)
+ph1 = getoptions(h1);
+ph1.Title.String = 'Zero-pole map of the open loop system';
+ph1.Title.FontSize = 12;
+setoptions(h1, ph1)
+
 %  Model creation
 sys = 'zumoModel';
 new_system(sys);
 open_system(sys);
-
-%  Values from transfer functions
-g = 9.8;
-l = 0.27;               % TODO: Lenght of Zumobot
-trq = 0.155;
-Ia = 120e-3;
-numMotor = [trq/Ia];      % TODO: Check constant - Kma != Km
-denMotor = [55927.5, 1];   % TODO: Check constant - Tm != Max torque
-numZumo = [(-1/g), 1];
-denZumo = [l, 0, -g];
 
 %  Setup values for block positions and sizes
 x = 30;
@@ -30,9 +59,9 @@ vCounter = 1;
 %  Creating a block for the step function
 pos = [x y+h/4 x+w y+h*.75];
 add_block('built-in/Step',[sys '/Setpoint'],'Position',pos, ...
-          'Time', '0', ...      %  Step time
-          'Before', '10', ...   %  Initial value
-          'After', '0');        %  Final value
+          'Time', '3', ...      %  Step time
+          'Before', '0', ...   %  Initial value
+          'After', '1');        %  Final value
 
 %  Creating a block for the sum
 pos = [x+(offset*hCounter) y*vCounter x+(offset*hCounter)+w (y*vCounter)+h];
