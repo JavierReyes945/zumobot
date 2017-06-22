@@ -15,7 +15,7 @@ tcm = 0.5;          % Time constant of the motor [ s ]
 Km = 17;            % Gain motor [ rad/s/V ]
 Kf = 9/pi;          % Gain of feedback [ V/rad/s ]
 
-%  Linearized approximation transfer function IP
+%  Linearized approximation transfer function of Zumo
 Kp = 1/((M+m)*g);
 Ap = 1/((m*g*L*(M+m))/((M+m)*(L+m*(L^2))-(m*L)^2));
 numZumo = [Kp];
@@ -23,7 +23,7 @@ denZumo = [Ap -1];
 iptf = tf(numZumo, denZumo, 'InputName', 'Force', ...
                             'OutputName', 'angular position');
 
-%  Overall transfer function of actiation mechanism
+%  Overall transfer function of actuation mechanism
 numMotor = [Km*(M+m)*R 0];
 denMotor = [tcm 1];
 mtf = tf(numMotor, denMotor, 'InputName', 'Error voltage', ...
@@ -36,7 +36,7 @@ zmtf = tf(numSys, denSys, 'InputName', 'Error voltage', ...
                           'OutputName', 'angular position');
 
 %  Zero-pole map of the open loop system
-h1 = rlocusplot(zmtf)
+h1 = rlocusplot(zmtf);
 ph1 = getoptions(h1);
 ph1.Title.String = 'Zero-pole map of the open loop system';
 ph1.Title.FontSize = 12;
@@ -59,7 +59,7 @@ vCounter = 1;
 %  Creating a block for the step function
 pos = [x y+h/4 x+w y+h*.75];
 add_block('built-in/Step',[sys '/Setpoint'],'Position',pos, ...
-          'Time', '3', ...      %  Step time
+          'Time', '2', ...      %  Step time
           'Before', '0', ...   %  Initial value
           'After', '1');        %  Final value
 
@@ -75,7 +75,7 @@ add_line(sys,'Setpoint/1','sum1/1','autorouting','on');
 %  Creatin a block for the motor
 pos = [x+(offset*hCounter) y*vCounter x+(offset*hCounter)+w (y*vCounter)+h];
 add_block('built-in/TransferFcn',[sys '/Motor'],'Position',pos, ...
-          'Numerator', mat2str(numMotor), 'Denominator', mat2str(denMotor));
+          'Numerator', mat2str(numMotor, 5), 'Denominator', mat2str(denMotor, 5));
 hCounter = hCounter + 1;
 
 %  Adding the connection between sum and motor
@@ -84,7 +84,7 @@ add_line(sys,'sum1/1','Motor/1','autorouting','on');
 %  Creatin a block for the Zumobot
 pos = [x+(offset*hCounter) y*vCounter x+(offset*hCounter)+w (y*vCounter)+h];
 add_block('built-in/TransferFcn',[sys '/Zumo'],'Position',pos, ...
-          'Numerator', mat2str(numZumo), 'Denominator', mat2str(denZumo));
+          'Numerator', mat2str(numZumo, 5), 'Denominator', mat2str(denZumo, 5));
 hCounter = hCounter + 1;
 
 %  Adding the connection between motor and Zumobot
