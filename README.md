@@ -1,17 +1,27 @@
 # zumobot
-Arduino + MATLAB project for a self-balancing zumo robot
 
--- General remarks
-* Study case project for the Control Theory lecture
-* Code based on the balancing example available with the 32U4 library
-* Code is under development
+Repository for the Control Theory lecture Project
+Summer semester 2017 - Master Embedded Systems for Mechatronics - Fachhochschule Dortmund
 
--- Content
-* Aduino file code _main_zumobot.ino_
+## General considerations
+
+This project is based on the [Zumo 32U4 robot](https://www.pololu.com/category/170/zumo-32u4-robot) . Code is **under development**.
+
+## Structure
+
+The project contains MATLAB script code that generates the model and calculates all the constants to contol the system, and an Arduino code where those values should be implemented and tested into the robot.
+
 * MATLAB script file with Contol Model _model_zumo.m_
+* Aduino file code _main_zumobot.ino_
 
--- Instructions
-* Arduino code can be run directly into the Pololu 32U4 Zumobot
-* MATLAB script can be run directly, as it creates and runs the simulink model
+## Description
 
-_Please create a branch, don't push to the master branch._
+> TODO: Complete
+
+## Authors
+
+* **Javier Reyes** - **Hari Kumar Venkatesh**
+
+## License
+
+This code is licensed under the GNU [General Public License](License.md)
