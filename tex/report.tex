@@ -6,9 +6,10 @@
 
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{amsmath}
 
-\usepackage[backend=biber, style=numeric]{biblatex}
-\bibliography{base}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\bibliography{report}
 
 
 \begin{document}
@@ -21,11 +22,13 @@
 \tableofcontents
 \newpage
 
-\section{Introduction}
+\section*{Introduction}
 
 One of the most used study cases in Control Theory is the Inverted Pendulum analysis, as it present an unstable open-loop characteristic but is also possible to stabilize on a closed-loop configuration.
 
 Here we present the anyalis of the Zumobot 32U4, a small robot available on the market. It is equiped with two DC motors, an Arduino-based board with several periferials.
+
+TODO: Complete
 
 \section{System analysis}
 
@@ -65,15 +68,53 @@ Text of the section\footnote{\label{fn1}This is a footnote}.
 
 Text of the section after the footnote \ref{fn1}.
 
+TODO: Complete
+
 \section{Mathematical development}
 
 Through the literature is possible to find several approaches to obtain a model for the IP.
 
 To fully model the dynamic behavior of the zumo robot, we need to consider the equations that govern the movement as rigid body.
 
-Text of the section\cite{DOE17} with a reference.
+\subsection{First approach - Sum of forces}
 
-Text of the section\cite{TYSON08} with another reference.
+The first approach considered here is described in \cite{SUL03}, as follows:
+
+The equations of motion are obtained from the sum of forces in the cart for the horizontal direction.
+
+\begin{equation} \label{sfch}
+F-b\dot{x}-N=M\ddot{x}
+\end{equation}
+
+Now considering the pendulum itself, the force applied in the horizontal direction due to the momentum of the pendulum is determined as:
+
+\begin{equation} \label{dhfp}
+\tau=r\cdot F=I\cdot \ddot{\theta}
+\end{equation}
+
+Given the fact that the moment of inertia of a pendulum of mass $m$ is defined as $I=m\cdot L^2$, the previous equation can be rewritten as:
+
+\begin{equation} \label{dhfp2}
+F=\frac{I\cdot \ddot{\theta}}{r}=\frac{m\cdot l^2\cdot \ddot{\theta}}{l}=m\cdot l\cdot \ddot{\theta}
+\end{equation}
+
+Obtaining the component of the force prevoiusly defined in the horizontal direction:
+
+\begin{equation} \label{sfph}
+F=m\cdot l\cdot \ddot{\theta}\cdot \cos{\theta}
+\end{equation}
+
+Now, the component of the centripetal force acting on the pendulum is similar to the one in \ref{dhfp2}, but the horizontal component of this force is:
+
+\begin{equation} \label{scfph}
+F=m\cdot l\cdot \ddot{\theta}\cdot \sin{\theta}
+\end{equation}
+
+Summing the previously defined forces present in the horizontal direction, we obtain the following expression:
+
+\begin{equation} \label{scfph}
+F=m\cdot l\cdot \ddot{\theta}\cdot \sin{\theta}
+\end{equation}
 
 \section{System model}
 
