@@ -1,7 +1,7 @@
 # zumobot
 
-Repository for the Control Theory lecture Project
-Summer semester 2017 - Master Embedded Systems for Mechatronics - Fachhochschule Dortmund
+Repository for the Control Theory lecture Project.
+Summer semester 2017 - Master Embedded Systems for Mechatronics - Fachhochschule Dortmund.
 
 ## General considerations
 
@@ -9,14 +9,24 @@ This project is based on the [Zumo 32U4 robot](https://www.pololu.com/category/1
 
 ## Structure
 
-The project contains MATLAB script code that generates the model and calculates all the constants to contol the system, and an Arduino code where those values should be implemented and tested into the robot.
+The project contains MATLAB script code that generates the model and calculates all the constants to contol the system, and an Arduino code where those values should be implemented and tested into the robot. Independent Simulink model is added for testing pruposes.
 
-* MATLAB script file with Contol Model _model_zumo.m_
+* MATLAB script file with Control Model _model_zumo.m_
+* Simulink model for macro testing _model3.slx_
 * Aduino file code _main_zumobot.ino_
 
-## Description
+## Status
 
-> TODO: Complete
+- [ ] Mathematical model from summing forces approach
+- [ ] Closed-loop control model values for summing forces approach
+- [ ] Constants calculation and tuning for the controller for summing forces approach
+- [ ] Zumobot deployment and testing for summing forces approach
+- [ ] Mathematical model from Euler-Lagrange approach
+- [ ] Closed-loop control model values for Euler-Lagrange approach
+- [ ] Constants calculation and tuning for the controller for Euler-Lagrange approach
+- [ ] Zumobot deployment and testing for Euler-Lagrange approach
+- [ ] Final report document
+- [ ] Presentation slides
 
 ## Authors
 

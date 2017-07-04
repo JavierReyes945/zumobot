@@ -8,4 +8,4 @@ $(FILE).pdf : $(FILE).tex $(FILE).bib
 	pdflatex $(FILE)
 
 clean :
-	Remove-Item *.aux,*.bbl,*.bcf,*.blg,*.lof,*.log,*.lot,*.xml,*.toc,*.pdf
+	rm *.aux *.bbl *.bcf *.blg *.lof *.log *.lot *.xml *.toc
