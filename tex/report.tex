@@ -2,16 +2,7 @@
 
 \title{Zumobot case study}
 \date{29.6.2017}
-\author{Javier Reyes\inst{1} \and Hari Kumar\inst{2}}
-\institute[Fachhochschule Dortmund]
-{
-  \inst{1}
-  Faculty of Electronics and Informatic\\
-  Fachhochschule Dortmund
-  \and
-  \inst{2}
-  Faculty of Electronics and Informatic\\
-  Fachhochschule Dortmund}
+\author{Javier Reyes \and Hari Kumar Venkatesh}
 
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -34,15 +25,15 @@
 
 \section*{Introduction}
 
-One of the most used study cases in Control Theory is the Inverted Pendulum analysis, as it present an unstable open-loop characteristic but is also possible to stabilize on a closed-loop configuration.
+One of the most used study cases in Control Theory is the Inverted Pendulum analysis, as it presents an unstable open-loop characteristic but is also possible to stabilize it on a closed-loop configuration.
 
-Here we present the anyalis of the Zumobot 32U4, a small robot available on the market. It is equiped with two DC motors, an Arduino-based board with several periferials.
+Here we present the analysis of the Zumobot 32U4, a small robot available in the market. The Zumo 32U4 robot is a complete, versatile robot controlled by an Arduino-compatible ATmega32U4 microcontroller. The Zumo 32U4 robot can be programmed from a computer using any operating system that supports the Arduino environment.
 
 TODO: Complete
 
 \section{System analysis}
 
-An inverted pendulum can be represented as a cart moving on an horizontal axis, connected to a rigid body pendulum.
+An inverted pendulum can be represented as a rigid body pendulum connected to a cart moving on a horizontal axis. Controlling the stability of the Zumobot can be compared to balancing the inverted pendulum on the moving cart.
 
 \begin{comment}
 	\begin{figure}[!htbp]
@@ -78,21 +69,25 @@ An inverted pendulum can be represented as a cart moving on an horizontal axis, 
 	\end{table}
 \end{comment}
 
-Text of the section\footnote{\label{fn1}This is a footnote}.
+%Text of the section\footnote{\label{fn1}This is a footnote}.
 
-Text of the section after the footnote \ref{fn1}.
+%Text of the section after the footnote \ref{fn1}.
 
 TODO: Complete
 
 \section{Mathematical development}
 
-Through the literature is possible to find several approaches to obtain a model for the IP.
+Through the numerous literature is possible to find several approaches to obtain a model for the Inverted Pendulum.
 
 To fully model the dynamic behavior of the zumo robot, we need to consider the equations that govern the movement as rigid body.
 
+TODO: Complete
+
 \subsection{First approach - Sum of forces}
 
-The first approach considered here is described in \cite{SUL03}, as follows:
+The first approach considered here is described in \cite{SUL03}.
+
+\subsubsection{Dynamic behavior}
 
 The equations of motion are obtained from the sum of forces in the cart for the horizontal direction.
 
@@ -136,6 +131,78 @@ Now we can substitute \ref{nfp} into \ref{sfch}, we obtain the first equation of
 F=(M+m)\ddot{x}+b\cdot \dot{x}+m\cdot l\cdot \ddot{\theta}\cdot \cos{\theta}-m\cdot l\cdot \dot{\theta}^2\cdot \sin{\theta}
 \end{equation}
 
+To get the second equation of motion, we sum the forces perpendicular to the pendulum. The vertical components of this forces are considered here to get:
+
+\begin{equation} \label{sfppv}
+P\cdot \sin{\theta}+N\cdot \cos{\theta}-m\cdot g\cdot \sin{\theta}=m\cdot l\cdot \ddot{\theta}+m\cdot \ddot{x}\cdot \cos{\theta}
+\end{equation}
+
+To get rid of the $P$ and $N$ terms, sum the moments around the center of gravity of the pendulum:
+
+\begin{equation} \label{smcg}
+-P\cdot l\cdot \sin{\theta}-N\cdot l\cdot \cos{\theta}=I\cdot \ddot{\theta}
+\end{equation}
+
+Summing up the equations \ref{sfppv} and \ref{smcg}, we obtain the second equation of movement:
+
+\begin{equation} \label{sem}
+(I+m\cdot l^2)\ddot{\theta}+m\cdot g\cdot l\cdot \sin{\theta}=-m\cdot l\cdot \ddot{x}\cdot \cos{\theta}
+\end{equation}
+
+The obtained equations are non-linear, so they are linearized around the operating point, defined as the top vertical position or $\pi rad$ from the stable equilibrium position. We need also to define a small angle deviation from the top vertical position, so that $\theta=\pi+\phi$.
+
+Under this circunstances, we can deduce that $\cos{\theta}\approx -1$, $\sin{\theta}\approx -\phi$, and $\dot{\theta}^2\approx 0$. Applying this relations into our movement equations, we obtain:
+
+\begin{equation} \label{feml}
+F=(M+m)\ddot{x}+b\cdot \dot{x}-m\cdot l\cdot \ddot{\phi}
+\end{equation}
+
+\begin{equation} \label{seml}
+(I+m\cdot l^2)\ddot{\phi}-m\cdot g\cdot l\cdot \phi=m\cdot l\cdot \ddot{x}
+\end{equation}
+
+To obtain the transfer function of the linearized system of equations analytically, we perform the Laplace transform of the system equations:
+
+\begin{equation} \label{fems}
+F(s)=(M+m)s^2\cdot X(s)+b\cdot s\cdot X(s)-m\cdot l\cdot s^2\cdot \Phi(s)
+\end{equation}
+
+\begin{equation} \label{sems}
+(I+m\cdot l^2)s^2\cdot \Phi(s)-m\cdot g\cdot l\cdot \Phi(s)=m\cdot l\cdot s^2\cdot X(s)
+\end{equation}
+
+To unify the equations, we solve \ref{fems} for $X(s)$ and then replace it into \ref{sems}, obtaining:
+
+\begin{equation} \label{ecms}
+\frac{\Phi(s)}{F(s)}=\frac{m\cdot l\cdot s}{q\cdot s^3+b(l+m\cdot l^2)s^2-m\cdot g\cdot l(M+m)s-b\cdot m\cdot g\cdot l}
+\end{equation}
+
+Where:
+
+\begin{equation} \label{dq}
+q=(M+m)(l+m\cdot l^2)-(m\cdot l)^2
+\end{equation}
+
+Assuming a coefficient of friction as zero, we can represent the equation as:
+
+\begin{equation} \label{efms}
+\frac{\Phi(s)}{F(s)}=\frac{K_p}{\frac{s^2}{A_p^2}-1}
+\end{equation}
+
+With:
+
+\begin{equation} \label{dka}
+K_p=\frac{1}{(M+m)g} ; A_p=\pm \sqrt{\frac{(M+m)m\cdot g\cdot l}{(M+m)(l+m\cdot l^2)-(m\cdot l)^2}}
+\end{equation}
+
+\subsubsection{Actuator system}
+
+TODO: Complete
+
+\subsection{Second approach - Euler-Lagrange}
+
+TODO: Complete
+
 \section{System model}
 
 Text of the section.
@@ -157,5 +224,6 @@ Text of the section.
 
 \newpage
 \printbibliography
+\nocite{*}
 
 \end{document}

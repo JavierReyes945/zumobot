@@ -17,12 +17,12 @@ The project contains MATLAB script code that generates the model and calculates 
 
 ## Status
 
-- [ ] Mathematical model from summing forces approach
-- [ ] Closed-loop control model values for summing forces approach
+- [x] Mathematical model from summing forces approach
+- [x] Closed-loop control model values for summing forces approach
 - [ ] Constants calculation and tuning for the controller for summing forces approach
 - [ ] Zumobot deployment and testing for summing forces approach
-- [ ] Mathematical model from Euler-Lagrange approach
-- [ ] Closed-loop control model values for Euler-Lagrange approach
+- [x] Mathematical model from Euler-Lagrange approach
+- [x] Closed-loop control model values for Euler-Lagrange approach
 - [ ] Constants calculation and tuning for the controller for Euler-Lagrange approach
 - [ ] Zumobot deployment and testing for Euler-Lagrange approach
 - [ ] Final report document
