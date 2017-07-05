@@ -4,10 +4,11 @@
 \date{29.6.2017}
 \author{Javier Reyes \and Hari Kumar Venkatesh}
 
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{amsmath}
-\usepackage{comment}
+\usepackage{graphicx}	% Images
+\usepackage{booktabs}	% Tables
+\usepackage{amsmath}	% Special functions
+\usepackage{comment}	% Comment long
+\usepackage{amssymb}	% Lagrange symbol
 
 \usepackage[backend=biber, style=ieee]{biblatex}
 \bibliography{report}
@@ -197,9 +198,39 @@ K_p=\frac{1}{(M+m)g} ; A_p=\pm \sqrt{\frac{(M+m)m\cdot g\cdot l}{(M+m)(l+m\cdot 
 
 \subsubsection{Actuator system}
 
-TODO: Complete
+The actuation mechanism consist on a DC motor that drives a belt sytem around two wheels. The overall transfer function of the actuation mechanism will depend upon the motor and the belt system.
+
+The torque to be delivered by the motor is:
+
+\begin{equation} \label{t}
+T_L=(M+m)r^2\dot{\omega}
+\end{equation}
+
+The relation between Torque and Force can be expressed as:
+
+\begin{equation} \label{dtf}
+T_L\propto r^2 ; F\propto r
+\end{equation}
+
+The motor dynamics can be represented with the well known tansfer function:
+
+\begin{equation} \label{md}
+\omega(s)=K_m\frac{V(s)}{\tau s+1}
+\end{equation}
+
+Where $\tau$ is the time constant and depends on the load, and $K_m$ is the steady-state gain of the motor.
+
+\begin{equation} \label{mtf}
+\frac{F(s)}{E(s)}=K_m\frac{(M+m)r\cdot s}{\tau s+1}
+\end{equation}
 
 \subsection{Second approach - Euler-Lagrange}
+
+To represent the dynamics of the system, the initial definition is the natural form of the Lagrangian in classical mechanics:
+
+\begin{equation} \label{mtf}
+\mathcal{L}=E_k-E_p
+\end{equation}
 
 TODO: Complete
 
