@@ -8,7 +8,7 @@ clear all, clc, close all
 
 %  Model creation
 %  TODO: Refine Simulink model, change name, create m-code from the simulink model
-sys = 'model3';
+sys = 'model';
 open_system(sys);
 
 %  Physical parameters of the system
@@ -39,7 +39,7 @@ iptfA = tf(numZumoA, denZumoA, 'InputName', 'force', ...
 
 %  Overall transfer function of motor and actuation mechanism
 %
-%   T(s)          (M+m)rs
+%   F(s)          (M+m)rs
 %  ------ = Km * ---------
 %   V(s)          (ts+1)
 

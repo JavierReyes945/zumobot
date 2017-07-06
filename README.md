@@ -12,7 +12,7 @@ This project is based on the [Zumo 32U4 robot](https://www.pololu.com/category/1
 The project contains MATLAB script code that generates the model and calculates all the constants to contol the system, and an Arduino code where those values should be implemented and tested into the robot. Independent Simulink model is added for testing pruposes.
 
 * MATLAB script file with Control Model _model_zumo.m_
-* Simulink model for macro testing _model3.slx_
+* Simulink model for macro testing _model.slx_
 * Aduino file code _main_zumobot.ino_
 
 ## Status
