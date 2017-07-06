@@ -8,4 +8,4 @@ $(FILE).pdf : $(FILE).tex $(FILE).bib
 	pdflatex $(FILE)
 
 clean :
-	rm *.aux *.bbl *.bcf *.blg *.lof *.log *.lot *.xml *.toc
+	find . \( -name "*.aux" -o -name "*.bbl" -o -name "*.bcf" -o -name "*.blg" -o -name "*.lof" -o -name "*.log" -o -name "*.lot" -o -name "*.xml" -o -name "*.toc" \) -delete

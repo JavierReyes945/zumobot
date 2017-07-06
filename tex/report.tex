@@ -228,8 +228,45 @@ Where $\tau$ is the time constant and depends on the load, and $K_m$ is the stea
 
 To represent the dynamics of the system, the initial definition is the natural form of the Lagrangian in classical mechanics:
 
-\begin{equation} \label{mtf}
+\begin{equation} \label{nfl}
 \mathcal{L}=E_k-E_p
+\end{equation}
+
+Where $E_k=\frac{1}{2}mv^2$ and $E_p=mgh$. Equation \ref{nfl} can then be rewriten as:
+
+\begin{equation} \label{nflr}
+\mathcal{L}=\frac{1}{2}mv^2-mgh
+\end{equation}
+
+The Euler-Lagrange equation states that:
+
+\begin{equation} \label{ele}
+\frac{d}{dt}\left( \frac{\partial\mathcal{L}}{\partial\dot{\theta}} \right)=\frac{\partial\mathcal{L}}{\partial\theta}
+\end{equation}
+
+The pendulum is a stiff bar of lenght L which is supported at one end by a frictionless pin.
+
+TODO: Insert image
+
+From the figure we can state that:
+
+\begin{equation} \label{coord}
+	\begin{aligned}
+		x=L\sin{\theta} & \dot{x}=L\cos{\theta}\dot{\theta}\\
+		y=L\cos{\theta} & \dot{y}=-L\sin{\theta}\dot{\theta}
+	\end{aligned}
+\end{equation}
+
+Velocity is a vector representing the change in the position in the coordinates $x$ and $y$. Hence:
+
+\begin{equation} \label{vel}
+v^2=\dot{x}^2+\dot{y}^2
+\end{equation}
+
+With the coordinates found in \ref{vel}, we can substitute in \ref{vel} to obtain:
+
+\begin{equation} \label{vels}
+v^2=L^2\cos{\theta}^2\dot{\theta}^2+L^2\sin{\theta}^2\dot{\theta}^2
 \end{equation}
 
 TODO: Complete
@@ -245,6 +282,7 @@ Text of the section.
 \section{Implementation}
 
 Text of the section.
+
 
 \begin{appendix}
 	\newpage
