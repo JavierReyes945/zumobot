@@ -1,4 +1,4 @@
-# zumobot
+# Zumobot
 
 Repository for the Control Theory lecture Project.
 Summer semester 2017 - Master Embedded Systems for Mechatronics - Fachhochschule Dortmund.
