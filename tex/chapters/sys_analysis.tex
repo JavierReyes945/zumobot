@@ -1,32 +1,59 @@
 % Start of Chapter 1 - System Analysis
-An inverted pendulum can be represented as a rigid body pendulum connected to a cart moving on a horizontal axis. Controlling the stability of the Zumobot can be compared to balancing the inverted pendulum on the moving cart.
+
+An inverted pendulum is basically a consistent mass on the ground (usually wheeled), connected through a frictionless joint to a pendulum, so that the pendulum can freely rotate around the joint and fall down by its own weight. The goal in this system is to provide an horizontal force to the mass on the ground with a direction contrary to the inclination of the pendulum with respect to the vertical axis, so that the pendulum holds in its highest position.
 
 \begin{figure}[h]
-	\centering
-	\includegraphics[width=0.5\textwidth]{zumo-superior.png}
-	\caption{Superior view of the zumo robot.}
-	\label{fig:sup-zumo}
+  \centering
+  \begin{tikzpicture}
+
+    % draw the red mass with two wheels
+    \fill[red] (-1.5,-1) rectangle node[black, anchor=north west]{$M$} (1.5,1);
+    \fill (-1.5,-1) circle [radius=10pt];
+    \fill (1.5,-1) circle [radius=10pt];
+
+    % draw the two coordinate axis
+    \draw[dashed,>=stealth,->, draw=gray] (-3,0) -- (3,0) node[anchor=west]{$x$};
+    \draw[dashed,>=stealth,->, draw=gray] (0,-1.5) -- (0,3) node[anchor=west]{$y$};
+
+    % draw the pendulum
+    \draw[blue] (0,0) -- ++(70:3) circle [fill=blue,radius=10pt];
+
+    % draw the force of gravity in the pendulum
+    \draw[green!50!black,->,thick] (70:3) -- +(0,-1) node[anchor=west]{$mg$};
+
+    \draw[green!50!black,->,thick] (-2.5,0) -- node[anchor=south]{$F$} (-1.5,0);
+
+    % draw the angle between pendulum and y-axis
+    \draw (0,2) arc [start angle=90, end angle=70, radius=2] node[midway, below]{$\theta$};
+
+  \end{tikzpicture}
+  \caption{Physical representation of the inverted pendulum}\label{fig:diag}
 \end{figure}
 
-The figure \ref{fig:sup-zumo} shows the robot that will be modeled as a Wheeled Inverted Pendulum.
+The case study in this work is based on a commercial Zumobot 32U4 (See figure \ref{fig:zumo}) robot from Pololu manufacturer. It consist on a rigid case that holds 2 brushless DC motors, an Arduino-compatible ATmega32U4 microcontroller and a set of batteries to power up the system. The motors are connected to a belt that rotates between to sets of wheels, sufficiently high to make the Zumobot able to stay in a vertical position without any contact between the case and the ground. The stucture is well suited for an inverted pendulum configuration, considering its physical characteristics and its simple programmability.
 
-\begin{table}[h]
-	\centering
-	\caption{Basic table.}
-	\label{tab:tab1}
-	\begin{tabular}{ccc}
-		\toprule
-		header A & header B & header C\\
-		\midrule
-		a & b & c\\
-		c & d & e\\
-		f & g & h\\
-		\bottomrule
-	\end{tabular}
-\end{table}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.6]{zumo-superior.png}
+  \caption{Pololu Zumobot}\label{fig:zumo}
+\end{figure}
 
-Text of the section\footnote{\label{fn1}This is a footnote}.
+The goal position of the Zumobot is a vertical position with respect to the vertical axis. The Zumobot needs to be previously adjusted (frontal sensors holder dismounted), as the frontal part will face the ground, and the posterior part will be held up.
 
-Text of the section after the footnote \ref{fn1}.
+\begin{figure}[h]
+  \centering
+  \includegraphics{zumo-balanced.png}
+  \caption{Stabilized Zumobot position}\label{fig:zumoStable}
+\end{figure}
 
-TODO: Complete.
+The device includes several helpful sensors and peripherals:
+
+\begin{itemize}
+  \item AVR ATmega 32U4 microcontroller, with 16MHz crystal oscillator.
+  \item Two micrometal gearmotors, driven by on-board TI DRV8838 motor divers.
+  \item 3-axis accelerometer + 3-axis gyroscope
+\end{itemize}
+
+To power the motors, the microcontroller generates a PWM digital signal and a direction bit for each wheel (left and right). The Arduino environment provides a library to configure and control the PWM value with low effort. Along with the corresponding firmware, the whole actuator part of the system is complete.
+
+The sensor part of the system uses the accelerometer and gyroscope to provide a value of the angle in the y axis, which is the axis that shows the angle $\theta$ defined in figure \ref{fig:diag}. The firmware in the Arduino controller gets the value fom the 

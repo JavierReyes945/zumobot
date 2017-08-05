@@ -4,7 +4,7 @@
 FILE=report
 
 # Rule to update the pdf document based on the latex source and the bib reference file
-$(FILE).pdf : $(FILE).tex
+$(FILE).pdf : $(FILE).tex chapters/sys_analysis.tex
 	pdflatex $(FILE)
 	bibtex $(FILE)
 	pdflatex $(FILE)

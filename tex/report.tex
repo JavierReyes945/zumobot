@@ -1,16 +1,16 @@
 % Long document, font size 12, two sides paper
 \documentclass[12pt, twoside]{report}
 
-% Temp: comments
-\usepackage{comment}
-
 % Encoding format
 \usepackage[utf8]{inputenc}
 
-% Graphics package to deal with images
+% Graphics import
 % Specify image folder
 \usepackage{graphicx}
 \graphicspath{{img/}}
+
+% Graphics generation
+\usepackage{tikz}
 
 % Special functions
 % Lagrange symbol
@@ -53,17 +53,17 @@
 \usepackage{listings}
 \renewcommand{\lstlistingname}{Code snippet} % Change of Word for caption
 \renewcommand{\lstlistlistingname}{List of \lstlistingname s}
-\lstset{language        = VHDL,
+\lstset{language        = Matlab,
         tabsize         = 2,
         basicstyle      = \scriptsize\ttfamily,
         numbers         = left,
         keywordstyle    = \color{myblue},
-        morekeywords    = {integer, time, ns, work},
-        stringstyle     = \color{mygray},
+        morekeywords    = {},
+        stringstyle     = \color{mypink},
         morestring      = [b]",
         identifierstyle = \color{black},
         numberstyle     = \color{mygray},
-        emph            = [1]{IEEE, STD_LOGIC_1164, numeric_std, std_logic, std_logic_vector, to_unsigned, rising_edge},
+        emph            = [1]{},
         emphstyle       = [1]{\color{mypink}},
         commentstyle    = \color{mygreen},
         inputpath       = ../
