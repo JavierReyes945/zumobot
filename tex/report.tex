@@ -11,6 +11,7 @@
 
 % Graphics generation
 \usepackage{tikz}
+\usetikzlibrary{positioning}
 
 % Special functions
 % Lagrange symbol
@@ -81,29 +82,14 @@
 % Inserts title page from external file
 \input{chapters/titlepage}
 
-% Blank page after title for formatting purposes
-\begingroup
-  \pagestyle{empty}
-  \cleardoublepage%
-\endgroup
+\renewcommand{\baselinestretch}{1.5}
+\setlength{\parskip}{1em}
 
 % Insert table of contents
 \tableofcontents
 
-% Blank page after content for formatting purposes
-\begingroup
-  \pagestyle{empty}
-  \cleardoublepage%
-\endgroup
-
 % Insert a list of figures
 \listoffigures
-
-% Blank page after list of figures for formatting purposes
-\begingroup
-  \pagestyle{empty}
-  \cleardoublepage%
-\endgroup
 
 % Inserts introduction from external file
 \chapter{Introduction}

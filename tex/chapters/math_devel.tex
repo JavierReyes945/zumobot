@@ -1,23 +1,59 @@
 % Start of Chapter 2 - Mathematical development
-Through the numerous literature is possible to find several approaches to obtain a model for the Inverted Pendulum.
 
-To fully model the dynamic behavior of the zumo robot, we need to consider the equations that govern the movement as rigid body.
-
-TODO: Complete
+Through the numerous literature it is possible to find several approaches to obtain a model for the Inverted Pendulum elements. For this work the focus is mostly on the dynamic behavior of the robot, as it is the one that influences the most the response of the system. To completely model the dynamic behavior of the robot, we need to consider the equations that govern the movement as a rigid body.
 
 \section{First approach: Sum of forces}
 
-The first approach considered here is described in \cite{SUL03}.
+The first approach considered here is described in \cite{SUL03}. The methodology uses traditional dynamic physics to obtain the equations of motion. The final equation is then linearized and transformed into complex frequency domain.
 
 \subsection{Dynamic behavior}
 
-The equations of motion are obtained from the sum of forces in the cart for the horizontal direction.
+The equations of motion are obtained from the sum of forces in the cart for the horizontal direction (see figure \ref{fig:carforces}).
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+		[force/.style={->,thick,green!40!black}]
+		% draw the two coordinate axis
+		\draw [dashed,>=stealth,->, draw=gray] (-3,0) -- (3,0) node[anchor=west]{$x$};
+		\draw [dashed,>=stealth,->, draw=gray] (0,-1.5) -- (0,3) node[anchor=west]{$y$};
+
+		% draw the red mass with two wheels
+		\fill[red!80!white] (-1.5,-1) rectangle (1.5,1);
+		\fill (-1.5,-1) circle [radius=10pt];
+		\fill (1.5,-1) circle [radius=10pt];
+
+		%draw the forces
+		\draw [force] (-2.5,0) -- node[green!40!black, auto]{$F$} (-1.5,0);
+		\draw [force] (2.5,0) -- node[green!40!black, auto]{$F_f$} (1.5,0);
+		\draw [force] (0,0) -- node[green!40!black, auto]{$N$} (-1,0);
+	\end{tikzpicture}
+	\caption{Cart forces}\label{fig:carforces}
+\end{figure}
 
 \begin{equation} \label{sfch}
 	F-b\cdot \dot{x}-N=M\cdot \ddot{x}
 \end{equation}
 
 Now considering the pendulum itself, the force applied in the horizontal direction due to the momentum of the pendulum is determined as:
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+		[force/.style={->,thick,green!40!black}]
+		% draw the two coordinate axis
+		\draw [dashed,>=stealth,->, draw=gray] (-3,0) -- (3,0) node[anchor=west]{$x$};
+		\draw [dashed,>=stealth,->, draw=gray] (0,-1.5) -- (0,3) node[anchor=west]{$y$};
+
+		% draw the pendulum
+		\node [circle,draw,blue,inner sep=0pt,minimum size=20pt] (pen) at (70:3) {};
+		\draw[blue] (0,0) -- (pen);
+
+		%draw the forces
+		\draw [force] (-2.5,0) -- node[green!40!black, auto]{$F$} (-1.5,0);
+	\end{tikzpicture}
+	\caption{Pendulum forces}\label{fig:penforces}
+\end{figure}
 
 \begin{equation} \label{dhfp}
 	\tau=r\cdot F=I\cdot \ddot{\theta}

@@ -1,10 +1,12 @@
 # Author: Javier Reyes
 
 # Defines the name of the tex file
-FILE=report
+FILE = report
+
+SOURCES = $(FILE).tex chapters/*.tex
 
 # Rule to update the pdf document based on the latex source and the bib reference file
-$(FILE).pdf : $(FILE).tex chapters/sys_analysis.tex
+$(FILE).pdf : $(SOURCES)
 	pdflatex $(FILE)
 	bibtex $(FILE)
 	pdflatex $(FILE)

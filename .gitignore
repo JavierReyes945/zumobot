@@ -240,4 +240,5 @@ slprj/
 octave-workspace
 
 # Simulink autosave extension
-.autosave
+*.autosave
+*.r2014a
