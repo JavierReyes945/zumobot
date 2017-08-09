@@ -242,3 +242,4 @@ octave-workspace
 # Simulink autosave extension
 *.autosave
 *.r2014a
+temp.slx

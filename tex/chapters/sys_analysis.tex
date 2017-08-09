@@ -60,13 +60,7 @@ The control system is then defined as shown in the figure \ref{fig:condiag}.
 
 \begin{figure}[h]
 	\centering
-	\begin{tikzpicture}
-		% draw elements (tf as rectangles, sum as circles)
-		\node at (0,0) [circle,draw] {};
-		\node at (1.5,0) [rectangle,draw] {};
-		\node at (2.5,0) [rectangle,draw] {};
-		\node at (2,-1) [rectangle,draw] {};
-	\end{tikzpicture}
+	\includegraphics[scale=0.6]{control-system-simple.png}
 	\caption{Control diagram of the inverted pendulum}\label{fig:condiag}
 \end{figure}
 
@@ -81,37 +75,7 @@ With this clarification, the control diagram of the system becomes:
 
 \begin{figure}[h]
 	\centering
-	\begin{tikzpicture}
-		[tf/.style={rectangle,draw,thick,inner sep=0pt,minimum height=10mm,minimum width=20mm},
-		sum/.style={circle,draw,thick,inner sep=0pt,minimum size=10mm},
-		empty/.style={circle,draw,minimum size=3mm,fill=black}]
-
-		% draw elements (tf as rectangles, sum as circles)
-		\node [empty] (input)                       {};
-		\node [sum]   (errsum)  [right=of input]    {};
-		\node [tf]    (control) [right=of errsum]   {};
-		\node [tf]    (motor)   [right=of control]  {};
-		\node [tf]    (robot)   [right=of motor]    {};
-		\node [empty] (output)  [right=of robot]    {};
-		\node [tf]    (sensor)  [below=of motor]    {};
-
-		% draw names for the elements
-		\node [above] at (input.north)    {$u$};
-		\node [below] at (control.south)  {$controller$};
-		\node [below] at (motor.south)    {$motor$};
-		\node [below] at (robot.south)    {$robot$};
-		\node [above] at (output.north)   {$y$};
-		\node [below] at (sensor.south)   {$sensor$};
-
-		% draw the arrows between elements
-		\draw [->] (input) to (errsum);
-		\draw [->] (errsum) to (control);
-		\draw [->] (control) to (motor);
-		\draw [->] (motor) to (robot);
-		\draw [->] (robot) to (output);
-		%\draw [->] (robot) to () to (sensor) to ();
-		%\draw [->] (sensor) to () to (errsum);
-	\end{tikzpicture}
+	\includegraphics[scale=0.6]{control-system.png}
 	\caption{Control diagram of the inverted pendulum - analysis elements}\label{fig:condiag2}
 \end{figure}
 

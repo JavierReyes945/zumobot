@@ -25,7 +25,7 @@ The equations of motion are obtained from the sum of forces in the cart for the 
 
 		%draw the forces
 		\draw [force] (-2.5,0) -- node[green!40!black, auto]{$F$} (-1.5,0);
-		\draw [force] (2.5,0) -- node[green!40!black, auto]{$F_f$} (1.5,0);
+		\draw [force] (2.5,0) -- node[green!40!black, auto]{$F_friction$} (1.5,0);
 		\draw [force] (0,0) -- node[green!40!black, auto]{$N$} (-1,0);
 	\end{tikzpicture}
 	\caption{Cart forces}\label{fig:carforces}
@@ -50,7 +50,10 @@ Now considering the pendulum itself, the force applied in the horizontal directi
 		\draw[blue] (0,0) -- (pen);
 
 		%draw the forces
-		\draw [force] (-2.5,0) -- node[green!40!black, auto]{$F$} (-1.5,0);
+		\draw [force] (70:1.5) -- node[green!40!black, auto]{$mg$} +(-90:1);
+		\draw [force] (-1,0) -- node[green!40!black, auto]{$N$} (0,0);
+		\draw [force] (70:1.5) -- node[green!40!black, auto]{$I\ddot{\theta}$} +(160:1);
+		\draw [force] (70:3) -- node[green!40!black, auto]{$I\dot{\theta}^2$} +(70:1);
 	\end{tikzpicture}
 	\caption{Pendulum forces}\label{fig:penforces}
 \end{figure}
@@ -155,7 +158,7 @@ With:
 
 \subsection{Actuator system}
 
-The actuation mechanism consist on a DC motor that drives a belt sytem around two wheels. The overall transfer function of the actuation mechanism will depend upon the motor and the belt system.
+The actuation mechanism consist on a DC motor that drives a belt system around two wheels. The overall transfer function of the actuation mechanism will depend upon the motor and the belt system.
 
 The torque to be delivered by the motor is:
 
@@ -169,7 +172,7 @@ The relation between Torque and Force can be expressed as:
 	T_L\propto r^2 ; F\propto r
 \end{equation}
 
-The motor dynamics can be represented with the well known tansfer function:
+The motor dynamics can be represented with the well known transfer function \cite{SUL03} \cite{ZAC17}:
 
 \begin{equation} \label{md}
 	\omega(s)=K_m\frac{V(s)}{\tau s+1}
@@ -178,8 +181,27 @@ The motor dynamics can be represented with the well known tansfer function:
 Where $\tau$ is the time constant and depends on the load, and $K_m$ is the steady-state gain of the motor.
 
 \begin{equation} \label{mtf}
-	\frac{F(s)}{E(s)}=K_m\frac{(M+m)r\cdot s}{\tau s+1}
+	\frac{T(s)}{E(s)}=K_m\frac{(M+m)r\cdot s}{\tau s+1}
 \end{equation}
+
+\subsection{Simulation}
+
+The obtained model is analyzed with computational tools (MATLAB), to validate its behavior and calculate an appropiate controller. As shown in figure \ref{fig:zpopenA}, the system has a pole in the right part of the complex plane, fitting in the definition of an unstable system.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.3]{rlocus-open-A.png}
+	\caption{Zero-pole diagram for the open-loop system}\label{fig:zpopenA}
+\end{figure}
+
+The open-loop response shown in figure \ref{fig:openrespA} confirms the unstable behavior.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.3]{open-loop-stepA.png}
+	\caption{Open-loop step response of the system}\label{fig:openrespA}
+\end{figure}
+
 
 \section{Second approach - Euler-Lagrange}
 
@@ -194,6 +216,8 @@ Where $E_k=\frac{1}{2}mv^2$ and $E_p=mgh$. Equation \ref{nfl} can then be rewrit
 \begin{equation} \label{nflr}
 	\mathcal{L}=\frac{1}{2}mv^2-mgh
 \end{equation}
+
+
 
 The Euler-Lagrange equation states that:
 
