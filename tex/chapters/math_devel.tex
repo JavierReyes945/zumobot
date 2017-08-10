@@ -2,7 +2,7 @@
 
 Through the numerous literature it is possible to find several approaches to obtain a model for the Inverted Pendulum elements. For this work the focus is mostly on the dynamic behavior of the robot, as it is the one that influences the most the response of the system. To completely model the dynamic behavior of the robot, we need to consider the equations that govern the movement as a rigid body.
 
-\section{First approach: Sum of forces}
+\section{First approach: Forces analysis}
 
 The first approach considered here is described in \cite{SUL03}. The methodology uses traditional dynamic physics to obtain the equations of motion. The final equation is then linearized and transformed into complex frequency domain.
 
@@ -112,7 +112,7 @@ Summing up the equations \ref{sfppv} and \ref{smcg}, we obtain the second equati
 
 The obtained equations are non-linear, so they are linearized around the operating point, defined as the top vertical position or $\pi rad$ from the stable equilibrium position. We need also to define a small angle deviation from the top vertical position, so that $\theta=\pi+\phi$.
 
-Under this circunstances, we can deduce that $\cos{\theta}\approx -1$, $\sin{\theta}\approx -\phi$, and $\dot{\theta}^2\approx 0$. Applying this relations into our movement equations, we obtain:
+Under this circumstances, we can deduce that $\cos{\theta}\approx -1$, $\sin{\theta}\approx -\phi$, and $\dot{\theta}^2\approx 0$. Applying this relations into our movement equations, we obtain:
 
 \begin{equation} \label{feml}
 	F=(M+m)\ddot{x}+b\cdot \dot{x}-m\cdot l\cdot \ddot{\phi}
@@ -156,6 +156,12 @@ With:
 	K_p=\frac{1}{(M+m)g} ; A_p=\pm \sqrt{\frac{(M+m)m\cdot g\cdot l}{(M+m)(l+m\cdot l^2)-(m\cdot l)^2}}
 \end{equation}
 
+Considering that the Zumobot is a unique mass element, where a differentiation of cart and pendulum masses is not feasible, an adjustment of the equation \ref{dka} is made, so that the mass considered is the total mass of the robot. This is possible as the actuator system should face the entire mass of the robot, and the pendular mass is also corresponding to the complete body.
+
+\begin{equation} \label{dka2}
+	K_p=\frac{1}{mg} ; A_p=\pm \sqrt{\frac{m^2\cdot g\cdot l}{m(l+m\cdot l^2)-(m\cdot l)^2}}
+\end{equation}
+
 \subsection{Actuator system}
 
 The actuation mechanism consist on a DC motor that drives a belt system around two wheels. The overall transfer function of the actuation mechanism will depend upon the motor and the belt system.
@@ -172,7 +178,7 @@ The relation between Torque and Force can be expressed as:
 	T_L\propto r^2 ; F\propto r
 \end{equation}
 
-The motor dynamics can be represented with the well known transfer function \cite{SUL03} \cite{ZAC17}:
+The motor dynamics can be represented with the well known transfer function, as in \cite{SUL03} \cite{ZAC17}:
 
 \begin{equation} \label{md}
 	\omega(s)=K_m\frac{V(s)}{\tau s+1}
@@ -186,7 +192,7 @@ Where $\tau$ is the time constant and depends on the load, and $K_m$ is the stea
 
 \subsection{Simulation}
 
-The obtained model is analyzed with computational tools (MATLAB), to validate its behavior and calculate an appropiate controller. As shown in figure \ref{fig:zpopenA}, the system has a pole in the right part of the complex plane, fitting in the definition of an unstable system.
+The obtained model is analyzed with computational tools (MATLAB), to validate its behavior and calculate an appropriate controller. As shown in figure \ref{fig:zpopenA}, the system has a pole in the right part of the complex plane, fitting in the definition of an unstable system.
 
 \begin{figure}[h]
 	\centering
@@ -202,8 +208,9 @@ The open-loop response shown in figure \ref{fig:openrespA} confirms the unstable
 	\caption{Open-loop step response of the system}\label{fig:openrespA}
 \end{figure}
 
-
 \section{Second approach - Euler-Lagrange}
+
+\subsection{Dynamic behavior}
 
 To represent the dynamics of the system as in \cite{JER12} and \cite{LUN02}, the initial definition is the natural form of the Lagrangian in classical mechanics:
 
@@ -217,19 +224,19 @@ Where $E_k=\frac{1}{2}mv^2$ and $E_p=mgh$. Equation \ref{nfl} can then be rewrit
 	\mathcal{L}=\frac{1}{2}mv^2-mgh
 \end{equation}
 
-
-
 The Euler-Lagrange equation states that:
 
 \begin{equation} \label{ele}
 	\frac{d}{dt}\left( \frac{\partial\mathcal{L}}{\partial\dot{\theta}} \right)=\frac{\partial\mathcal{L}}{\partial\theta}
 \end{equation}
 
-The pendulum is a stiff bar of lenght L which is supported at one end by a frictionless pin.
+The pendulum is a stiff bar of lenght L which is supported at one end by a frictionless pin. From the figure \ref{fig:xypend} we can state that:
 
-TODO: Insert image
-
-From the figure we can state that:
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{xy-pendulum.png}
+	\caption{Pendulum position}\label{fig:xypend}
+\end{figure}
 
 \begin{equation} \label{coord}
 	\begin{aligned}
@@ -287,12 +294,16 @@ Now that we have all the terms, we can write the equation:
 	\end{split}
 \end{equation}
 
-TODO: Insert development of second part of angular acceleration
+Following the same procedure, we obtain the expression for the angular acceleration produced by the cart:
+
+\begin{equation} \label{aac}
+	\ddot{\theta}_x=\frac{\ddot{x}}{l}\cos{\theta}
+\end{equation}
 
 The total accelerations present on the pendulum can then be stated as:
 
 \begin{equation} \label{saa}
-	\ddot{\theta}=\ddot{\theta}_g+\ddot{\theta}_x=\left(\frac{g}{l}\right)\sin{\theta}-\left(\frac{\dot{x}}{l}\right)\cos{\theta}
+	\ddot{\theta}=\ddot{\theta}_g+\ddot{\theta}_x=\left(\frac{g}{l}\right)\sin{\theta}-\left(\frac{\ddot{x}}{l}\right)\cos{\theta}
 \end{equation}
 
 The obtained equation is non-linear, so we apply an approximation based on the fact that the operation point implies an angle $\theta\approx0$. It means that $\sin{\theta}\approx\theta$ and $\cos{\theta}\approx1$. Applying this on \ref{saa}, we obtain:
@@ -310,7 +321,33 @@ To obtain the transfer function, we perform the Laplace transform on \ref{lesa}:
 Now we solve for the variables $\Theta$ and $X$:
 
 \begin{equation} \label{tfsa}
-	ls^2\Theta(s)-g\Theta(s)=-s^2X(s)
+	\frac{\Theta(s)}{X(s)}=\frac{-s^2}{ls^2-g}
 \end{equation}
 
-TODO: Complete
+\subsection{Actuator system}
+
+For the motor modeling, a recommended approach \cite{LUN02} is used. The motor is diven by a voltage proportional to the angle:
+
+\begin{equation} \label{mtf2}
+	\frac{X(s)}{V(s)}=\frac{k_M}{s(\tau_M s+1)}
+\end{equation}
+
+
+
+\subsection{Simulation}
+
+With the obtained model, a simulation in open-loop condition is run. As expected, the system contains a pole in the right part of the complex plane.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.3]{rlocus-open-B.png}
+	\caption{Zero-pole diagram for the open-loop system}\label{fig:zpB}
+\end{figure}
+
+The system response to a step input shows total unstability, as in figure \ref{fig:stepB}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.3]{open-loop-stepB.png}
+	\caption{Open-loop step response of the system}\label{fig:stepB}
+\end{figure}

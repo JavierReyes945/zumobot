@@ -1,8 +1,17 @@
 % Long document, font size 12, two sides paper
-\documentclass[12pt, twoside]{report}
+\documentclass{report}
+
+\linespread{1.5}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0em}
 
 % Encoding format
 \usepackage[utf8]{inputenc}
+
+% Titles settings
+\usepackage{titlesec}
+\titleformat{\chapter}{\huge\bfseries}{\thechapter}{1ex}{}
+\titlespacing{\chapter}{0pt}{-30pt}{20pt}
 
 % Graphics import
 % Specify image folder
@@ -82,9 +91,6 @@
 % Inserts title page from external file
 \input{chapters/titlepage}
 
-\renewcommand{\baselinestretch}{1.5}
-\setlength{\parskip}{1em}
-
 % Insert table of contents
 \tableofcontents
 
@@ -92,7 +98,7 @@
 \listoffigures
 
 % Inserts introduction from external file
-\chapter{Introduction}
+\chapter*{Introduction}
 \input{chapters/introduction}
 
 % Inserts chapter from external file
@@ -100,8 +106,15 @@
 \input{chapters/sys_analysis}
 
 % Inserts chapter from external file
-\chapter{Mathematical development}
+\chapter{Mathematical Development}
 \input{chapters/math_devel}
+
+% Inserts chapter from external file
+\chapter{Control Design}
+\input{chapters/control_design}
+
+\linespread{1.2}
+\setlength{\parskip}{1em}
 
 % Inserts the bibliography contained in report.bib, include no cited
 \printbibliography%

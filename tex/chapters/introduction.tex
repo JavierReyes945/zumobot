@@ -1,6 +1,9 @@
 % Start of Introduction chapter
-One of the most used study cases in Control Theory is the Inverted Pendulum analysis, as it presents an unstable open-loop characteristic but is also possible to stabilize it on a closed-loop configuration.
 
-Here we present the analysis of the Zumobot 32U4, a small robot available in the market. The Zumo 32U4 robot is a complete, versatile robot controlled by an Arduino-compatible ATmega32U4 microcontroller. The Zumo 32U4 robot can be programmed from a computer using any operating system that supports the Arduino environment.
+In the control theory field, there are several case studies with different characteristics that allow the modeling and testing of different control concepts and strategies. One of this common study cases is the Inverted Pendulum, as it presents an unstable open-loop characteristic but it is also possible to stabilize it on a closed-loop configuration. The inverted pendulum system, as its name can lead, is typically a wheeled body that is kept in an unstable position from which, without any external signal or command, the body will inevitably fall down. The equilibrium point of the body should be maintained by means of an external element, that actuates over the body, commanded by a programmatic logic.
 
-TODO: Complete
+In the present document the typical control flow is presented, where the goal is initially to define the physical characteristics of a test device, a small robot 32U4 from Pololu. Then a mathematical model that represents the dynamic behavior of the robot when maintained at its highest position is obtained. From this model, a frequency domain representation is obtained, from which finally a controller can be designed that provides the adequate signals to the system in order to maintain the robot in its unstable equilibrium position.
+
+The Zumo 32U4 robot is a complete and versatile robot controlled by a microcontroller and additional circuitry. The Zumo 32U4 robot can be programmed to carry out a constant task, allowing a digital implementation of a PID control of the angle of the robot, by actuating on the motors of the robot.
+
+The result obtained showed some mathematical differences between the standard models found in the literature and the specific robot used. Some control limitations were also stated when the real execution was compared with the simulated response. Some future work and considerations for better alternatives are made.

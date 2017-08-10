@@ -28,6 +28,8 @@ An inverted pendulum is basically a consistent mass on the ground (usually wheel
 	\caption{Physical representation of the inverted pendulum}\label{fig:diag}
 \end{figure}
 
+\section{Zumobot case study}
+
 The case study in this work is based on a commercial Zumobot 32U4 (See figure \ref{fig:zumo}) robot from Pololu manufacturer. It consist on a rigid case that holds 2 brushless DC motors, an Arduino-compatible ATmega32U4 microcontroller and a set of batteries to power up the system. The motors are connected to a belt that rotates between to sets of wheels, sufficiently high to make the Zumobot able to stay in a vertical position without any contact between the case and the ground. The stucture is well suited for an inverted pendulum configuration, considering its physical characteristics and its simple programmability.
 
 \begin{figure}[h]
@@ -56,7 +58,9 @@ To power the motors, the microcontroller generates a PWM digital signal and a di
 
 The sensor part of the system uses the accelerometer and gyroscope to provide a value of the angle in the y axis, which is the axis that shows the angle $\theta$ defined in figure \ref{fig:diag}. The firmware in the Arduino controller gets the value from the gyroscope, and performs an adjustment of the value based on the accelerometer reading. It should be noted that the manufacturer of the robot states in the technical documentation\cite{POL01} that the accelerometer and gyroscope readings are likely to be influenced by external noise from the DC motors and the batteries, and the values obtained should only be considered for rough estimation.
 
-The control system is then defined as shown in the figure \ref{fig:condiag}.
+\section{Control system}
+
+The desired control system is then defined as shown in the figure \ref{fig:condiag}. \par
 
 \begin{figure}[h]
 	\centering
@@ -64,14 +68,13 @@ The control system is then defined as shown in the figure \ref{fig:condiag}.
 	\caption{Control diagram of the inverted pendulum}\label{fig:condiag}
 \end{figure}
 
-The dynamics of the system can be divided into the following elements:
-
+The dynamics of the system can be divided into the following elements:  \par
 \begin{itemize}
 	\item DC motor behavior to convert a DC voltage to a force
 	\item Robot behavior defined by the physical characteristics
 \end{itemize}
 
-With this clarification, the control diagram of the system becomes:
+With this clarification, the control diagram of the system becomes: \par
 
 \begin{figure}[h]
 	\centering

@@ -4,15 +4,15 @@
 clear all, clc, close all
 
 %  Physical parameters of the system
-g = 9.8;				% Gravity constant [ m/s² ]
-m = 0.25;				% Mass of cart+pendulum [ kg ]]
-b = 0;					% Friction constant [ N/m/s ]
-L = 4.3e-2;		% Lenght of pendulum to center of gravity [ m ]
-I = (1/3)*m*(L^2);		% Moment of intertia (pendulum) [ kg.m² ]
-R = 1.3e-2;			% Radius of wheel [ m ]
-tcm = 100e-3;			% Time constant of the motor [ s ] (experimental)
+g = 9.8;						% Gravity constant [ m/s² ]
+m = 0.25;						% Mass of cart+pendulum [ kg ]]
+b = 0;							% Friction constant [ N/m/s ]
+L = 4.3e-2;					% Lenght of pendulum to center of gravity [ m ]
+I = (1/3)*m*(L^2);	% Moment of intertia (pendulum) [ kg.m² ]
+R = 1.3e-2;					% Radius of wheel [ m ]
+tcm = 0.1;				% Time constant of the motor [ s ] (experimental)
 Km = (400/75)*2*pi/60;	% Gain motor [ rad/s/V ] (400 rpm)
-Kf = 1;					% Gain of feedback [ V/rad/s ]
+Kf = 1;							% Gain of feedback [ V/rad/s ]
 
 %  Selection of modeling method
 %  (1) Forces approach
@@ -59,13 +59,13 @@ if sel==1
 	stfA = series(mtfA, iptfA);
 	ftfA = feedback(stfA, 1);
 
-% 	%  Zero-pole map of the open loop system
-% 	figure
-% 	h1 = rlocusplot(stfA);
-% 	ph1 = getoptions(h1);
-% 	ph1.Title.String = 'Zero-pole map of the open loop system';
-% 	ph1.Title.FontSize = 12;
-% 	setoptions(h1, ph1)
+	%  Zero-pole map of the open loop system
+	figure
+	h1 = rlocusplot(stfA);
+	ph1 = getoptions(h1);
+	ph1.Title.String = 'Zero-pole map of the open loop system';
+	ph1.Title.FontSize = 12;
+	setoptions(h1, ph1)
 
 	%  Zero-pole map of the closed loop system
 	figure
