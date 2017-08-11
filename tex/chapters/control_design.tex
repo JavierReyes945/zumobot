@@ -6,9 +6,23 @@ From the obtained model, it is clear that the system needs a controller to gover
 
 With help of the computational tool (MATLAB), it is nowadays easy to tune a controller with desired specifications. The current version includes a GUI tool that allows to move around the different control specifications for the selected system, checking continuously the result. It certainly reduces time and effort in the calculations and design.
 
-Given the
+In this work, several different sets of constant definitions were made, with different simulated results. All of them
 
 \section{Implemented controller}
+
+The implemented controller was based on a common firmware provided by the Arduino community to be executed in the ATmega32U4 microcontroller. The source code is freely distributed to use and modify by the Zumo32U4 library repository. The algorithm executes the following steps:
+
+\begin{enumerate}
+	\item Calibration process of the accuracy of the measured values of the gyroscope, with help of the accelerometer.
+	\item Main loop process:
+	\begin{enumerate}
+		\item Calculation of the current angle of the robot.
+		\item Estimation of the weight of the measurement.
+		\item Calculation of the difference between the desired and current angle.
+		\item Calculation of PID control signal.
+		\item Application of the control signal to the DC motor driver.
+	\end{enumerate}
+\end{enumerate}
 
 \section{Results analysis}
 
@@ -16,6 +30,16 @@ The results of this work were not as satisfactory as expected, due to the bad be
 
 \subsection{Insufficient model}
 
+The Zumobot has unique physical characteristics that cannot be represented with the model used. A bigger and complex system model needs to be defined that allows the representation of the real dimensions of the robot.
+
+One of the biggest sources of disparity is the dynamic simulation of the free fall of the robot, due to the assumption of the mass, mass distribution, center of gravity and inertia. This values magnify the error in the expected response of the system, and consequently the controller is ineffective.
+
+Another discrepancy in the model is the continuous-discrete difference. The digital implementation of the controller makes necessary to contemplate the plant as a discrete system, as all the measurements are taken in a fixed, discretized manner.
+
+Finally, the management of the units in the modeling was careful in terms of units consistency, but there is a possibility that the small values for angle measurement in degrees cause errors in integer division operations on the Arduino architecture. A better approach with angle measured in radians can be used instead.
+
 \subsection{Insufficient control technique}
 
-\subsection{subsection name}
+The PID is one of the most basic control techniques for both stable and unstable systems. It simplicity and robustness equilibrium makes it a great choice for several applications.
+
+Based on the learnings on this work, it might be a better choice to consider controller types less dependency of the accuracy of the error, and that offer better response in a wider range of operation. The linearized model used in this work shows a very small range where it can be valid.

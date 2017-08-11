@@ -4,11 +4,11 @@
 clear all, clc, close all
 
 %  Physical parameters of the system
-g = 9.8;						% Gravity constant [ m/s² ]
+g = 9.8;						% Gravity constant [ m/s^2 ]
 m = 0.25;						% Mass of cart+pendulum [ kg ]]
 b = 0;							% Friction constant [ N/m/s ]
 L = 4.3e-2;					% Lenght of pendulum to center of gravity [ m ]
-I = (1/3)*m*(L^2);	% Moment of intertia (pendulum) [ kg.m² ]
+I = (1/3)*m*(L^2);	% Moment of intertia (pendulum) [ kg.m^2 ]
 R = 1.3e-2;					% Radius of wheel [ m ]
 tcm = 0.1;				% Time constant of the motor [ s ] (experimental)
 Km = (400/75)*2*pi/60;	% Gain motor [ rad/s/V ] (400 rpm)
@@ -27,15 +27,15 @@ open_system(sys);
 if sel==1
 	%  Linearized approximation transfer function of Zumo
 	%
-	%  theta(s)          Kp                   1                  (      (M+m)mgl      )
-	%  -------- = ----------------- ; Kp = ------- ; Ap = +- sqrt( ------------------ )
-	%    F(s)     (1/(Ap²))s² - 1          (M+m)g                ( (M+m)(l+ml²)-(ml)² )
+	%  theta(s)          Kp                   1                  (        (M+m)mgl      )
+	%  -------- = ----------------- ; Kp = ------- ; Ap = +- sqrt( -------------------- )
+	%    F(s)     (1/(Ap^2))s^2 - 1        (M+m)g                ( (M+m)(l+ml^2)-(ml)^2 )
 	%
 	%  Due to the dual mass in the model, an approximation is made: (M+m) = m
 	%
-	%  theta(s)          Kp                 1                 (       m²gl       )
-	%  -------- = ----------------- ; Kp = ---- ; Ap = +- sqrt( ---------------- )
-	%    T(s)     (1/(Ap²))s² - 1           mg                ( (m)(l+ml²)-(ml)² )
+	%  theta(s)          Kp                 1                 (        m^2gl       )
+	%  -------- = ----------------- ; Kp = ---- ; Ap = +- sqrt( ------------------ )
+	%    T(s)     (1/(Ap^2))s^2 - 1         mg                ( (m)(l+ml^2)-(ml)^2 )
 
 	Kp = 1/((m)*g);
 	Ap = ((m*(L+m*(L^2))-(m*L)^2)/(m^2*g*L)); % Power and inverse already calculated
